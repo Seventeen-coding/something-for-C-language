@@ -7,7 +7,7 @@
 #include "bird.h"
 #include "duck.h"
 
-typedef   Animal *(* getAnimal_func)(const char *name);
+typedef   ANIMAL_T *(* getAnimal_func)(const char *name);
 
 
 typedef struct _AnimalFactory

@@ -8,7 +8,7 @@
 #define LOG_ENABLE
 #define BREAKPOINT_ENABLE
 
-#define PRINT_TAG(x) printf("%s:[ %s: %s : %d ]", x, __FILE__, __FUNCTION__, __LINE__)
+#define PRINT_TAG(x) printf("%s:[%s:%s:%d]", x, __FILE__, __FUNCTION__, __LINE__)
 
 #ifndef LOG_ENABLE
 #define INFO_TAG "INFO"
