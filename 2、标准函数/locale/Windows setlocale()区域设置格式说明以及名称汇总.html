@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)http://c.biancheng.net/ref/45.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="renderer" content="webkit"> 
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-store, must-revalidate">
+<meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+<meta http-equiv="expires" content="0">
+<link rel="shortcut icon" href="http://c.biancheng.net/favicon.ico?v=1.0">
+<link href="./Windows setlocale()区域设置格式说明以及名称汇总_files/common.css" rel="stylesheet">
+<title>Windows setlocale()区域设置格式说明以及名称汇总</title>
+<meta name="keywords" content="Windows,setlocale,区域,设置,格式,说明,">
+<meta name="description" content="使用 setlocale() 进行区域设置（本地设置、地域设置）时，可以通过 locale 参数指明具体的地域设置名称（字符串），也就是设置为哪种地域，或者说哪种语言文化。 C语言标准并未对 l">
+</head>
+<body>
+<div id="header">
+<span id="sidebar-toggle" class="toggle-btn" toggle-target="#sidebar"><span class="glyphicon glyphicon-menu-down"></span></span>
+<a id="logo" class="left" href="http://c.biancheng.net/">
+<img height="26" src="./Windows setlocale()区域设置格式说明以及名称汇总_files/logo.png" alt="C语言中文网">
+</a>
+<ul id="nav-main" class="toggle-target hover-none">
+<li class="active"><a href="http://c.biancheng.net/ref/">C语言函数大全</a></li>
+<li><a href="http://c.biancheng.net/cpp/u/jiaocheng/">C语言教程</a></li>
+<li><a href="http://c.biancheng.net/cpp/biancheng/cpp/rumen/">C++教程</a></li>
+<li><a href="http://c.biancheng.net/cpp/u/c20/">C语言和内存</a></li>
+<li><a href="http://c.biancheng.net/cpp/u/c16/">C语言多文件编程</a></li>
+</ul>
+<span id="nav-main-toggle" class="toggle-btn" toggle-target="#nav-main">
+<span class="box">
+<span class="bar"></span>
+<span class="bar"></span>
+<span class="bar"></span>
+</span>
+</span>
+</div>
+<div id="main" class="clearfix">
+<div id="sidebar" class="toggle-target">
+<dl class="list headers">
+<dt><span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span> 头文件</dt>
+<dd><a href="http://c.biancheng.net/ref/assert_h/">&lt;assert.h&gt;</a></dd>
+<dd><a href="http://c.biancheng.net/ref/ctype_h/">&lt;ctype.h&gt;</a></dd>
+<dd><a href="http://c.biancheng.net/ref/wctype_h/">&lt;wctype.h&gt;</a></dd>
+<dd><a href="http://c.biancheng.net/ref/errno_h/">&lt;errno.h&gt;</a></dd>
+<dd><a href="http://c.biancheng.net/ref/float_h/">&lt;float.h&gt;</a></dd>
+<dd><a href="http://c.biancheng.net/ref/limits_h/">&lt;limits.h&gt;</a></dd>
+<dd><a href="http://c.biancheng.net/ref/locale_h/">&lt;locale.h&gt;</a></dd>
+<dd><a href="http://c.biancheng.net/ref/math_h/">&lt;math.h&gt;</a></dd>
+</dl>
+</div>
+<div id="article-wrap">
+<div id="article">
+<div id="arc-info">阅读：<span class="click">224</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+作者：<a target="_blank" href="http://c.biancheng.net/cpp/about/author/">严长生</a></div>
+<h1 class="underline">Windows setlocale()区域设置格式说明以及名称汇总</h1>
+<div id="arc-body">使用&nbsp;<a href="http://c.biancheng.net/ref/setlocale.html">setlocale()</a> 进行区域设置（本地设置、地域设置）时，可以通过 locale 参数指明具体的地域设置名称（字符串），也就是设置为哪种地域，或者说哪种语言文化。<br>
+<br>
+C语言标准并未对 locale 的格式进行说明，只是要求编译器至少支持以下三个名称：
+<ul>
+<li>
+"C"：默认的地域设置，只包含了很少的地域信息；</li>
+<li>
+""：使用当前操作系统默认的地域设置；</li>
+<li>
+NULL：不设置任何地域信息，而是用来获取当前地域设置的名称。</li>
+</ul>
+<br>
+locale 在 Windows 和 Linux 下有不同的格式，除了上面三个强制要求的名称，其他名称在 Windows 和 Linux 下的写法一般不同。本文只讲解 Windows 下的地域设置格式，如果读者希望了解 Linux 下的情况，请猛击《<a href="http://c.biancheng.net/ref/44.html">Linux setlocale()区域设置格式说明以及名称汇总</a>》。
+<h2>
+Windows 下 locale 的格式</h2>
+微软已经在官方文档中说明了 locale 参数可以使用的格式，请猛击：<a href="https://technet.microsoft.com/zh-cn/library/hzz3tw78.aspx" target="_blank">https://technet.microsoft.com/zh-cn/library/hzz3tw78.aspx</a><br>
+<br>
+以下是我自己的理解，对有些读者可能更加通俗易懂。<br>
+<br>
+Linux 下的 locale 只有一种格式，而 Windows 下的 locale 有三种格式。
+<h4>
+1) 专有名称</h4>
+Windows 定义了一组专有的地域设置名称供 setlocale() 使用，这些名称包含了地域设置的所有信息，例如：
+<p class="info-box">
+setlocale ("LA_ALL", "en-US"); &nbsp;//en-US就是一个专有名称，它对应的是美国英语<br>
+setlocale ("LC_CTYPE", "zh-CN"); &nbsp;//zh-CN就是一个专有名称，它对应的是大陆汉语</p>
+不同的 Windows 版本支持不同的专有名称，大家在使用时注意查看手册。Windows 各个版本支持的所有名称请猛击：<a href="https://msdn.microsoft.com/en-us/library/cc233982.aspx" target="_blank">https://msdn.microsoft.com/en-us/library/cc233982.aspx</a>
+<h2>
+2) 语言 + 地区 + 代码页</h2>
+使用 setlocale() 进行地域设置时，还可以按照下面的格式来设置 locale 参数：
+<p class="info-box">
+language_area.codepage</p>
+language 表示语言，例如英语或中文；area 表示使用该语言的地区，例如美国或者中国大陆；codepage 表示代码页，例如 GBK 编码的代码页是<code>936</code>。<br>
+<br>
+举一个简单的例子：
+<p class="info-box">
+chs_china.936</p>
+chs 是“chinese-simplified”的简写，表示简体中文，china 表示中国大陆，936 是 GBK 编码的代码页。<br>
+<br>
+可以省略 area 和 codepage，只写 language，此时会选择当前 language 的默认 area 和 codepage；如此一来，上例就可以简写为<code>chs</code>。GBK 是简体中文版 Windows 默认的编码，它的代码页就是 936。<br>
+<br>
+<ul>
+<li>
+可用的 language 名称列表请猛击：<a href="https://msdn.microsoft.com/en-us/library/39cwe7zf(v=vs.80).aspx" target="_blank">https://msdn.microsoft.com/en-us/library/39cwe7zf(v=vs.80).aspx</a></li>
+<li>
+可用的 area 名称列表请猛击：<a href="https://msdn.microsoft.com/en-us/library/cdax410z(VS.80).aspx" target="_blank">https://msdn.microsoft.com/en-us/library/cdax410z(VS.80).aspx</a></li>
+<li>
+可用的 codepage 列表请猛击：<a href="https://msdn.microsoft.com/en-us/library/dd317756(VS.85).aspx" target="_blank">https://msdn.microsoft.com/en-us/library/dd317756(VS.85).aspx</a></li>
+</ul>
+<h2>
+3) 代码页</h2>
+字符编码就是使用某种语言的某个地区定义的文字在计算机内部的表示方式，代码页就是字符编码在计算机中的 ID，知道了代码页也就知道使用哪个地区的哪种语言了。<br>
+<br>
+使用代码页的格式为：
+<p class="info-box">
+.codepage</p>
+例如，<code>setlocale("LC_ALL", ".936");</code>就表示使用 GBK 编码，对应的是使用汉语的中国大陆地区。<br>
+<br>
+Windows 下可用的所有代码页列表请猛击：<a href="https://msdn.microsoft.com/en-us/library/dd317756(VS.85).aspx" target="_blank">https://msdn.microsoft.com/en-us/library/dd317756(VS.85).aspx</a>
+<h2>
+总结</h2>
+以上三种格式中，第一种是微软官方推荐使用的，这种格式和 Linux 下的非常类似。</div>
+</div>
+<div id="uyan_frame"></div>
+</div>
+</div>
+<script type="text/javascript">
+// 当前文章ID
+window.arcIdRaw = 'a_' + 45;
+window.arcId = "7e9c3MhmAKZVwjQumJ5+mmUSHxLPAx1ciucin8xr7Ov5Bu14nR8IU5Bn";
+window.siteId = 2;
+window.cmsTempletsVer = 1.0;
+</script>
+<script src="./Windows setlocale()区域设置格式说明以及名称汇总_files/jquery1.12.4.min.js.下载"></script>
+<script src="./Windows setlocale()区域设置格式说明以及名称汇总_files/jquery.snippet.js.下载"></script>
+<script src="./Windows setlocale()区域设置格式说明以及名称汇总_files/common.js.下载"></script>
+<script type="text/javascript">
+var uyan_config = {
+	"du": "",
+	"su": window.arcIdRaw
+};
+</script>
+<script type="text/javascript" src="./Windows setlocale()区域设置格式说明以及名称汇总_files/uyan.js.下载"></script>
+
+</body></html>
