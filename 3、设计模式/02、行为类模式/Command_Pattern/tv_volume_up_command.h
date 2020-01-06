@@ -6,7 +6,7 @@
 #include "my_tv.h"
 
 typedef struct _volume_up_command{
-    MY_COMMAND command;
+    MY_COMMAND_T command;
     MY_TV *tv;
 }volume_up_command;
 

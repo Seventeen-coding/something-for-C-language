@@ -14,7 +14,7 @@ typedef void (*volume_down_func)(void *this_control);
 
 typedef void (power_key_func)(void *this_control);
 
-typedef int (*set_command_func)(void *this_control,MY_COMMAND **this_control_command,MY_COMMAND *set_command);
+typedef int (*set_command_func)(void *this_control,MY_COMMAND_T **this_control_command,MY_COMMAND_T *set_command);
 
 
 //命令可以多种方法关联
@@ -32,12 +32,12 @@ typedef struct _my_control{
     //power_key_handle_func 该如何？
 
     //command
-    MY_COMMAND *power_on_command;
-    MY_COMMAND *power_off_command;
-    MY_COMMAND *channel_up_command;
-    MY_COMMAND *channel_down_command;
-    MY_COMMAND *volume_up_command;
-    MY_COMMAND *volume_down_command;
+    MY_COMMAND_T *power_on_command;
+    MY_COMMAND_T *power_off_command;
+    MY_COMMAND_T *channel_up_command;
+    MY_COMMAND_T *channel_down_command;
+    MY_COMMAND_T *volume_up_command;
+    MY_COMMAND_T *volume_down_command;
 
 
 

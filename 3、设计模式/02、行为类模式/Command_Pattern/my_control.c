@@ -7,7 +7,7 @@ static void channel_down(My_Control *this_control);
 static void volume_up(My_Control *this_control);
 static void volume_down(My_Control *this_control);
 
-static int set_command(My_Control *this_control, MY_COMMAND **this_control_command, MY_COMMAND *set_command);
+static int set_command(My_Control *this_control, MY_COMMAND_T **this_control_command, MY_COMMAND_T *set_command);
 My_Control *Create_control()
 {
     My_Control * control;
@@ -18,7 +18,7 @@ My_Control *Create_control()
     {
         return NULL;
     }
-    memset(control,0,sizeof(MY_COMMAND));
+    memset(control,0,sizeof(MY_COMMAND_T));
     do {
         control->channel_down = channel_down;
         control->channel_up = channel_up;
@@ -41,7 +41,7 @@ static void power_on(My_Control *this_control)
     {
         return ;
     }
-    this_control->power_on_command->execute(this_control->power_on_command);
+    this_control->power_on_command->f_execute(this_control->power_on_command);
 }
 static void power_off(My_Control *this_control)
 {
@@ -49,7 +49,7 @@ static void power_off(My_Control *this_control)
     {
         return ;
     }
-    this_control->power_off_command->execute(this_control->power_off_command);
+    this_control->power_off_command->f_execute(this_control->power_off_command);
 }
 
 static void channel_up(My_Control *this_control)
@@ -58,7 +58,7 @@ static void channel_up(My_Control *this_control)
     {
         return ;
     }
-    this_control->channel_up_command->execute(this_control->channel_up_command);
+    this_control->channel_up_command->f_execute(this_control->channel_up_command);
 }
 
 static void channel_down(My_Control *this_control)
@@ -67,7 +67,7 @@ static void channel_down(My_Control *this_control)
     {
         return ;
     }
-    this_control->channel_down_command->execute(this_control->channel_down_command);
+    this_control->channel_down_command->f_execute(this_control->channel_down_command);
 }
 
 static void volume_up(My_Control *this_control)
@@ -76,7 +76,7 @@ static void volume_up(My_Control *this_control)
     {
         return ;
     }
-    this_control->volume_up_command->execute(this_control->volume_up_command);
+    this_control->volume_up_command->f_execute(this_control->volume_up_command);
 }
 
 static void volume_down(My_Control *this_control)
@@ -85,10 +85,10 @@ static void volume_down(My_Control *this_control)
     {
         return ;
     }
-    this_control->volume_down_command->execute(this_control->volume_down_command);
+    this_control->volume_down_command->f_execute(this_control->volume_down_command);
 }
 
-static int set_command(My_Control *this_control,MY_COMMAND **this_control_command,MY_COMMAND *set_command)
+static int set_command(My_Control *this_control,MY_COMMAND_T **this_control_command,MY_COMMAND_T *set_command)
 {
     if(this_control == NULL || this_control_command == NULL || set_command == NULL )
     {

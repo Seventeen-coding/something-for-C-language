@@ -1,6 +1,6 @@
 #include "tv_volume_down_command.h"
 
-static void execute(volume_down_command *this_command);
+static void f_execute(volume_down_command *this_command);
 
 volume_down_command *Create_volume_down_command(MY_TV *tv)
 {
@@ -16,14 +16,14 @@ volume_down_command *Create_volume_down_command(MY_TV *tv)
             break;
         }
         command->tv = tv;
-        command->command.execute = execute;
+        command->command.f_execute = f_execute;
         return command;
     }while(0);
 
     free(command);
     return NULL;
 }
-static void execute(volume_down_command *this_command)
+static void f_execute(volume_down_command *this_command)
 {
     if(this_command == NULL)
     {

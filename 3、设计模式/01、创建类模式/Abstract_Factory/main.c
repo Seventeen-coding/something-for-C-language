@@ -47,11 +47,11 @@ void f_Run(void)
 
 void f_Before(void)
 {
-    log_info("-------f_Before optimize\n-----------");
+    log_info("-------f_Before optimize-----------\n");
 }
 void f_After(void)
 {
-    log_info("-------f_After optimize\n-----------");
+    log_info("-------f_After optimize-----------\n");
     ABSTRACT_FACTORY_T *factory;
     factory = f_getFactory("Animal");
     if (factory == NULL)

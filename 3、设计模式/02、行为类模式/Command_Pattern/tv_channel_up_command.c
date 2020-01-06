@@ -1,6 +1,6 @@
 #include "tv_channel_up_command.h"
 
-static void execute(channel_up_command *this_command);
+static void f_execute(channel_up_command *this_command);
 
 
 channel_up_command *Create_channel_up_command(MY_TV *tv)
@@ -17,14 +17,14 @@ channel_up_command *Create_channel_up_command(MY_TV *tv)
             break;
         }
         command->tv = tv;
-        command->command.execute = execute;
+        command->command.f_execute = f_execute;
         return command;
     }while(0);
 
     free(command);
     return NULL;
 }
-static void execute(channel_up_command *this_command)
+static void f_execute(channel_up_command *this_command)
 {
     if(this_command == NULL)
     {

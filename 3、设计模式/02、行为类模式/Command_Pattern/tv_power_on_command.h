@@ -5,7 +5,7 @@
 #include "my_tv.h"
 
 typedef struct _power_on_command{
-    MY_COMMAND command;
+    MY_COMMAND_T command;
     MY_TV *tv;
 }power_on_command;
 
