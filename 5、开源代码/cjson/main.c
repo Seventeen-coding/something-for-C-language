@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "log_util.h"
-#include "cJSON/cJSON.h"
+#include "cJSON.h"
 
 /*
 {
