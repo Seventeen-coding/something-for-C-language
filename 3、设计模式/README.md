@@ -22,7 +22,7 @@
 
 5. 原型模式 Prototype Pattern
 
-6. 迭代器模式 Iterator Pattern
+6. 迭代器模式 Iterator Pattern（未完成）
 
 ### 行为类模式
 
@@ -30,7 +30,7 @@
 
 7. 命令模式 Command Pattern
 
-8. 解释器模式 Interpreter Pattern
+8. 解释器模式 Interpreter Pattern（未完成）
 
 9. 责任链模式 Chain of Responsibility
 
@@ -44,9 +44,9 @@
 
 14. 策略模式	Strategy Pattern
 
-15. 模板方法模式 Template Method Pattern
+15. 模板方法模式 Template Method Pattern（未完成）
 
-16. 访问者模式 Visitor Pattern
+16. 访问者模式 Visitor Pattern（未完成）
 
 ### 结构类模式
 
@@ -54,17 +54,17 @@
 
 17. 适配器模式 Adapter Pattern
 
-18. 组合模式 Composite Pattern
+18. 组合模式 Composite Pattern（未完成）
 
-19. 代理模式 Proxy Pattern
+19. 代理模式 Proxy Pattern（未完成）
 
-20. 桥梁模式 Bridge Pattern
+20. 桥梁模式 Bridge Pattern（未完成）
 
-21. 装饰模式 Decorator Pattern
+21. 装饰模式 Decorator Pattern（未完成）
 
-22. 门面模式 Facade Pattern
+22. 门面模式 Facade Pattern（未完成）
 
-23. 共享元模式 Flyweight Pattern
+23. 共享元模式 Flyweight Pattern（未完成）
 
 
 

@@ -1,56 +1,71 @@
 #include "subtract_expression.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-static int interpret(SUBTRACT_EXPRESSION_T *this, const char *str, int *interpret_result);
 
-int f_Create_Subtract_Expression_ex(SUBTRACT_EXPRESSION_T *expression, ABSTRACT_EXPRESSION_T *left_exp,
-                                    ABSTRACT_EXPRESSION_T *right_exp)
+static int interpret(const char *str, int *interpret_result);
+
+static number_expression *num_exp = NULL;
+
+subtract_expression *Create_subtract_expression()
 {
-    if (expression == NULL)
-    {
-        return -1;
-    }
+    subtract_expression *expression;
 
-    NONTERMINAL_EXPRESSION_T *nonterminal_exp = &expression->parent;
-    if (expression->f_interpret == NULL)
-    {
-        expression->f_interpret = (F_INTERPRET_T)interpret;
-    }
-    nonterminal_exp->f_interpret = expression->f_interpret;
-    if (f_Create_Nonterminal_Expression_ex(nonterminal_exp, left_exp, right_exp) != 0)
-    {
-        return -2;
-    }
+    expression = (subtract_expression *) malloc(sizeof(subtract_expression));
 
-    return 0;
-}
-SUBTRACT_EXPRESSION_T *f_Create_Subtract_Expression(ABSTRACT_EXPRESSION_T *left_exp,
-                                                    ABSTRACT_EXPRESSION_T *right_exp)
-{
-    SUBTRACT_EXPRESSION_T *expression;
-
-    expression = (SUBTRACT_EXPRESSION_T *)malloc(sizeof(SUBTRACT_EXPRESSION_T));
-    memset(expression, 0, sizeof(SUBTRACT_EXPRESSION_T));
-    if (f_Create_Subtract_Expression_ex(expression, left_exp, right_exp) != 0)
+    if(expression == NULL)
     {
-        free(expression);
         return NULL;
     }
+    memset(expression, 0 , sizeof(subtract_expression));
 
-    return expression;
+    do
+    {
+        expression->exp.interpret = (interpret_func)interpret;
+        expression->exp.interpret_result = 0;   //OK
+
+        if(num_exp == NULL)
+        {
+            num_exp = Create_number_expression();
+            if( num_exp == NULL)
+            {
+                break;
+            }
+
+        }
+
+        return expression;
+    }while(0);
+
+    free(expression);
+    return NULL;
 }
 
-static int interpret(SUBTRACT_EXPRESSION_T *this, const char *str, int *interpret_result)
+static int interpret(const char *str,int *interpret_result)
 {
-    if (this == NULL || str == NULL)
+    char str_tmp[256];
+    if(str == NULL)
     {
-        if (interpret_result != NULL)
-        {
-            *interpret_result = -1;
-        }
+        *interpret_result = -1;
         return 0;
     }
-    NONTERMINAL_EXPRESSION_T *expression = &this->parent;
-    return expression->left_exp->f_interpret(expression->left_exp, str, interpret_result) - expression->right_exp->f_interpret(expression->right_exp, str, interpret_result);
+    strcpy(str_tmp,str);
+    //检查语法 start
+
+    //检查语法 end
+    int result1 = 0 ;
+    int result2 = 0;
+
+    result1 = num_exp->exp.interpret(strtok(str_tmp,"-"),&num_exp->exp.interpret_result);
+    if(num_exp->exp.interpret_result != 0)
+    {
+        *interpret_result = -2;
+        return 0;
+    }
+
+    result2 = num_exp->exp.interpret(strtok(NULL,"-"),&num_exp->exp.interpret_result);
+    if(num_exp->exp.interpret_result != 0)
+    {
+        *interpret_result = -3;
+        return 0;
+    }
+    *interpret_result = 0;
+    return result1 - result2;
 }

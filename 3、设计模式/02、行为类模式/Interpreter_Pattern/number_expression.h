@@ -1,15 +1,13 @@
 #ifndef NUMBER_EXPRESSION_H
 #define NUMBER_EXPRESSION_H
 
-#include "terminal_expression.h"
+#include "expression.h"
 
-typedef struct _NUMBER_EXPRESSION_T
-{
-    TERMINAL_EXPRESSION_T parent;
-    F_INTERPRET_T f_interpret;
-} NUMBER_EXPRESSION_T;
+typedef struct _number_expression{
+    int number;
+    Expression_interface exp;
+}number_expression;
 
-int f_Create_Number_Expression_ex(NUMBER_EXPRESSION_T *expression);
-NUMBER_EXPRESSION_T *f_Create_Number_Expression(void);
+number_expression *Create_number_expression(void);
 
 #endif // NUMBER_EXPRESSION_H

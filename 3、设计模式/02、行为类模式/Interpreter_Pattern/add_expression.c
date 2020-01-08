@@ -1,63 +1,70 @@
 #include "add_expression.h"
-#include "log_util.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-static int interpret(ADD_EXPRESSION_T *this, const char *str, int *interpret_result);
-static int expression_grammar(const char *str);
 
-int f_Create_Add_Expression_ex(ADD_EXPRESSION_T *expression, ABSTRACT_EXPRESSION_T *left_exp,
-                               ABSTRACT_EXPRESSION_T *right_exp)
+static int interpret(const char *str, int *interpret_result);
+
+static number_expression *num_exp = NULL;
+
+add_expression *Create_add_expression()
 {
-    if (expression == NULL)
-    {
-        return -1;
-    }
+    add_expression *expression;
 
-    {
-        NONTERMINAL_EXPRESSION_T *nonterminal_exp = &expression->parent;
-        if (expression->f_interpret == NULL)
-        {
-            expression->f_interpret = (F_INTERPRET_T)interpret;
-        }
-        nonterminal_exp->f_interpret = expression->f_interpret;
-        if (f_Create_Nonterminal_Expression_ex(nonterminal_exp, left_exp, right_exp) != 0)
-        {
-            return -2;
-        }
-    }
-    return 0;
-}
-ADD_EXPRESSION_T *f_Create_Add_Expression(ABSTRACT_EXPRESSION_T *left_exp,
-                                          ABSTRACT_EXPRESSION_T *right_exp)
-{
-    ADD_EXPRESSION_T *expression;
+    expression = (add_expression *) malloc(sizeof(add_expression));
 
-    expression = (ADD_EXPRESSION_T *)malloc(sizeof(ADD_EXPRESSION_T));
-    if (expression == NULL)
+    if(expression == NULL)
     {
         return NULL;
     }
-    memset(expression, 0, sizeof(ADD_EXPRESSION_T));
-    if (f_Create_Add_Expression_ex(expression, left_exp, right_exp) != 0)
-    {
-        free(expression);
-        return NULL;
-    }
+    memset(expression, 0 , sizeof(add_expression));
 
-    return expression;
+    do
+    {
+        expression->exp.interpret = (interpret_func)interpret;
+        expression->exp.interpret_result = 0;   //OK
+
+        if(num_exp == NULL)
+        {
+            num_exp = Create_number_expression();
+            if( num_exp == NULL)
+            {
+                break;
+            }
+
+        }
+
+        return expression;
+    }while(0);
+
+    free(expression);
+    return NULL;
 }
 
-static int interpret(ADD_EXPRESSION_T *this, const char *str, int *interpret_result)
+static int interpret(const char *str,int *interpret_result)
 {
-    if (this == NULL || str == NULL)
+    char str_tmp[256];
+    if(str == NULL)
     {
-        if (interpret_result != NULL)
-        {
-            *interpret_result = -1;
-        }
+        *interpret_result = -1;
         return 0;
     }
-    NONTERMINAL_EXPRESSION_T *expression = &this->parent;
-    return expression->left_exp->f_interpret(expression->left_exp, str, interpret_result) + expression->right_exp->f_interpret(expression->right_exp, str, interpret_result);
+    strcpy(str_tmp,str);
+    //检查语法 start
+
+    //检查语法 end
+    int result = 0;
+
+    result = num_exp->exp.interpret(strtok(str_tmp,"+"),&num_exp->exp.interpret_result);
+    if(num_exp->exp.interpret_result != 0)
+    {
+        *interpret_result = -2;
+        return 0;
+    }
+
+    result += num_exp->exp.interpret(strtok(NULL,"+"),&num_exp->exp.interpret_result);
+    if(num_exp->exp.interpret_result != 0)
+    {
+        *interpret_result = -3;
+        return 0;
+    }
+    *interpret_result = 0;
+    return result;
 }

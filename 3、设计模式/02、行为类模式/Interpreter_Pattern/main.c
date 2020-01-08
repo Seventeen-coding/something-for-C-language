@@ -1,7 +1,7 @@
 
 #include "interpreter.h"
 #include <stdio.h>
-#include "log_util.h"
+
 void run();
 
 //解释器  给一段内容 分析 然后输出预期结果
@@ -15,16 +15,44 @@ int main(void)
 //做个加减法解释器
 void run()
 {
-    int ret = 0;
-    int result;
     //test number_expression
-    CALCULATOR_T *calculator = f_Get_Calculator_Instance();
-    char *context = "100-10";
-    result = calculator->result(context, &ret);
-    if (ret != 0)
+
+    number_expression *num_exp = Create_number_expression();
+    if(num_exp == NULL)
     {
-        log_info("ret = %d\n",ret);
         return;
     }
-    printf("%s = %d \n", context, result);
+    int result = 0;
+    int num = num_exp->exp.interpret("10",&result);
+
+    if(result != 0)
+    {
+        printf("expression error\n");
+    }
+    printf("num : %d \n",num);
+
+    add_expression *add_exp = Create_add_expression();
+    if(add_exp == NULL)
+    {
+        return;
+    }
+    num = add_exp->exp.interpret("10 + 402",&result);
+    if(result != 0)
+    {
+        printf("expression error\n");
+    }
+    printf("num : %d \n",num);
+
+
+    subtract_expression *sub_exp = Create_subtract_expression();
+    if(sub_exp == NULL)
+    {
+        return;
+    }
+    num = sub_exp->exp.interpret("10 - 402",&result);
+    if(result != 0)
+    {
+        printf("expression error\n");
+    }
+    printf("num : %d \n",num);
 }

@@ -1,72 +1,35 @@
 #include "number_expression.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-static int interpret(NUMBER_EXPRESSION_T *exp, const char *str, int *interpret_result);
 
-int f_Create_Number_Expression_ex(NUMBER_EXPRESSION_T *expression)
+
+static int interpret(const char *str,int *interpret_result);
+//static int add_node_to_list(struct number_expression_node *this_list_head_node,struct number_expression_node * node);
+
+number_expression *Create_number_expression()
 {
-    if (expression == NULL)
-    {
-        return -1;
-    }
+    number_expression *expression;
+    expression = (number_expression *) malloc(sizeof(number_expression));
 
-    TERMINAL_EXPRESSION_T *terminal_exp = &expression->parent;
-    if (expression->f_interpret == NULL)
-    {
-        expression->f_interpret = (F_INTERPRET_T)interpret;
-    }
-    terminal_exp->f_interpret = expression->f_interpret;
-    if (f_Create_Terminal_Expression_ex(terminal_exp))
-    {
-        return -2;
-    }
-
-    return 0;
-}
-NUMBER_EXPRESSION_T *f_Create_Number_Expression(void)
-{
-    NUMBER_EXPRESSION_T *expression;
-    expression = (NUMBER_EXPRESSION_T *)malloc(sizeof(NUMBER_EXPRESSION_T));
-
-    if (expression == NULL)
+    if(expression == NULL)
     {
         return NULL;
     }
-    memset(expression, 0, sizeof(NUMBER_EXPRESSION_T));
-    if (f_Create_Number_Expression_ex(expression) != 0)
+    memset(expression, 0 , sizeof(number_expression));
+
+    do
     {
-        free(expression);
-        return NULL;
-    }
-    return expression;
-}
-NUMBER_EXPRESSION_T *f_Get_Number_Expression_Instance(void)
-{
-    static NUMBER_EXPRESSION_T *instance = NULL;
-    if (instance != NULL)
-    {
-        return instance;
-    }
-    instance = f_Create_Number_Expression();
-    return instance;
+      //  expression->number_list_head_node = NULL;
+        expression->exp.interpret = (interpret_func)interpret;
+        expression->exp.interpret_result = 0;   //OK
+        return expression;
+    }while(0);
+
+    free(expression);
+    return NULL;
 }
 
-static int interpret(NUMBER_EXPRESSION_T *exp, const char *str, int *interpret_result)
+
+static int interpret(const char *str,int *interpret_result)
 {
-    if (str == NULL)
-    {
-        if (interpret_result != NULL)
-        {
-            *interpret_result = -1;
-        }
-        return 0;
-    }
-
-    if (interpret_result != NULL)
-    {
-        *interpret_result = atoi(str) < 0 ? -2 : 0;
-    }
-
+    *interpret_result = 0;
     return atoi(str);
 }
