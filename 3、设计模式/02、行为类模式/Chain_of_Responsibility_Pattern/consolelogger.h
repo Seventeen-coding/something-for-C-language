@@ -3,10 +3,10 @@
 
 #include "loggerchain.h"
 
-
-typedef struct _console_logger{
+typedef struct _console_logger
+{
     LoggerChain logger;
-}Console_Logger;
+} Console_Logger;
 
 Console_Logger *CreateConsoleLogger(int level);
 
