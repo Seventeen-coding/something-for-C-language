@@ -1,0 +1,6 @@
+﻿
+#ifndef GAME_NODE_CONFIG_H
+#define GAME_NODE_CONFIG_H
+
+
+#endif // GAME_NODE_CONFIG_H

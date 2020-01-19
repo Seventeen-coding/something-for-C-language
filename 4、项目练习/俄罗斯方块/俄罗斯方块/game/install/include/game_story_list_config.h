@@ -1,0 +1,6 @@
+﻿#ifndef GAME_STORY_LIST_CONFIG_H
+#define GAME_STORY_LIST_CONFIG_H
+
+
+#endif // GAME_STORY_LIST_CONFIG_H
+

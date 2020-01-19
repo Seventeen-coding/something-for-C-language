@@ -3,3 +3,5 @@
 .vscode
 obj
 third_party
+*.o
+opensource
